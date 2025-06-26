@@ -40,6 +40,7 @@
             color: var(--text-light);
             font-family: 'Montserrat', sans-serif;
             line-height: 1.6;
+            overflow-x: hidden; /* Prevent horizontal scroll */
         }
         
         /* Page Display Logic */
@@ -123,6 +124,7 @@
             display: none;
             flex-direction: column;
             cursor: pointer;
+            z-index: 1001;
         }
         
         .menu-toggle .bar {
@@ -159,6 +161,7 @@
         .hero-content {
             position: relative;
             z-index: 2;
+            padding: 0 1rem;
         }
 
         .hero-content h1 {
@@ -178,6 +181,8 @@
         .portfolio-category .swiper-slide {
              width: 320px;
              height: 480px;
+             background-size: cover;
+             background-position: center;
         }
         .view-all-btn {
             display: block;
@@ -256,6 +261,30 @@
         .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--primary-red); }
         .btn-primary { display: inline-block; background-color: var(--primary-red); color: #fff; padding: 1rem 2rem; text-decoration: none; border-radius: 5px; border: none; cursor: pointer; font-family: 'Bebas Neue', cursive; font-size: 1.2rem; letter-spacing: 1px; transition: background-color 0.3s ease; }
         .btn-primary:hover { background-color: #c40812; }
+
+        /* Social Links */
+        .social-links {
+            margin-top: 2rem;
+        }
+        .social-links h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .social-icons {
+            display: flex;
+            gap: 1.5rem;
+        }
+        .social-icons a {
+            color: var(--text-light);
+            transition: color 0.3s ease;
+        }
+        .social-icons a:hover {
+            color: var(--primary-red);
+        }
+        .social-icons svg {
+            width: 28px;
+            height: 28px;
+        }
         
         /* --- Footer --- */
         footer { text-align: center; padding: 2rem 0; background-color: #101010; color: var(--text-dark); font-size: 0.9rem; margin-top: 4rem; }
@@ -263,14 +292,33 @@
         /* --- Responsive Design --- */
         @media (max-width: 768px) {
             main { padding-top: 70px; }
-            .nav-links { position: absolute; right: -100%; top: 70px; background: var(--dark-bg); width: 100%; flex-direction: column; text-align: center; transition: 0.3s; padding-bottom: 1rem; }
+            .nav-links { position: absolute; right: -100%; top: 0; background: var(--dark-bg); width: 100%; height:100vh; flex-direction: column; align-items:center; justify-content:center; text-align: center; transition: 0.5s ease; padding-bottom: 1rem; }
             .nav-links.active { right: 0; }
             .nav-links li { margin: 1.5rem 0; }
             .menu-toggle { display: flex; }
-            .hero-content h1 { font-size: 4rem; }
-            .hero-content p { font-size: 1.2rem; }
-            .shortfilms-grid, .gallery-grid, .about-content { grid-template-columns: 1fr; }
-            .about-image { max-width: 300px; margin: 0 auto 2rem; }
+
+            .container { padding: 2.5rem 0; }
+            .hero-content h1 { font-size: 3.5rem; line-height: 1.2;}
+            .hero-content p { font-size: 1.1rem; }
+            h2 { font-size: 2.2rem; }
+
+            .portfolio-category .swiper-slide {
+                width: 280px;
+                height: 420px;
+            }
+
+            .shortfilms-grid, .gallery-grid, .about-content, .services-grid { 
+                grid-template-columns: 1fr;
+            }
+            .about-content {
+                text-align: center;
+            }
+            .about-image {
+                margin: 0 auto 2rem;
+            }
+             .social-icons {
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -308,9 +356,10 @@
                     <h2>Portraits</h2>
                     <div class="swiper-container">
                         <div class="swiper-wrapper">
-                             <div class="swiper-slide" style="background-image:url(https://i.postimg.cc/5yK1cTzm/IMG-1833.jpgq=80&w=600&h=900&auto=format&fit=crop)"></div>
-                             <div class="swiper-slide" style="background-image:url(https://i.postimg.cc/5yK1cTzm/IMG-1833.jpgq=80&w=600&h=900&auto=format&fit=crop)"></div>
-                             <div class="swiper-slide" style="background-image:url(https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600&h=900&auto=format&fit=crop)"></div>
+                             <div class="swiper-slide" style="background-image:url('https://i.postimg.cc/Fscr4Vyv/DSC-1468.jpg')"></div>
+                             <div class="swiper-slide" style="background-image:url('https://i.postimg.cc/d1GZsYqg/DSC07309.jpg')"></div>
+                             <div class="swiper-slide" style="background-image:url('https://i.postimg.cc/PqYgXJ5M/IMG-20250320-162710-Copy.jpg')"></div>
+                             <div class="swiper-slide" style="background-image:url('https://i.postimg.cc/x8P8M8Bv/DSC07287-Copy.jpg')"></div>
                         </div>
                         <div class="swiper-pagination"></div>
                     </div>
@@ -334,18 +383,18 @@
                 <h2>Shortfilms</h2>
                 <div class="shortfilms-grid">
                     <div class="film-card">
-                        <div class="film-video"><iframe src="https://www.youtube.com/embed/ScfV1t9u_0s" allowfullscreen></iframe></div>
+                        <div class="film-video"><iframe src="https://www.youtube.com/embed/8bRtqUO9I5o" allowfullscreen></iframe></div>
                         <div class="film-info">
-                            <h3 id="film-title-1">Chasing Light</h3>
-                            <p class="description" id="film-desc-1">A visual poem exploring the interplay of light and shadow in urban landscapes.</p>
+                            <h3 id="film-title-1">My Short Film 1</h3>
+                            <p class="description" id="film-desc-1">A description of your first short film.</p>
                             <button class="btn-gemini" onclick="generateFilmDescription('film-title-1', 'film-desc-1', this)">✨ Generate Description</button>
                         </div>
                     </div>
                     <div class="film-card">
-                        <div class="film-video"><iframe src="https://www.youtube.com/embed/hWz5T5-GZgQ" allowfullscreen></iframe></div>
+                        <div class="film-video"><iframe src="https://www.youtube.com/embed/p3mQIXbGHew" allowfullscreen></iframe></div>
                         <div class="film-info">
-                            <h3 id="film-title-2">Echoes in the Forest</h3>
-                            <p class="description" id="film-desc-2">A lone hiker discovers that the whispers of the past are never truly silent.</p>
+                            <h3 id="film-title-2">My Short Film 2</h3>
+                            <p class="description" id="film-desc-2">A description of your second short film.</p>
                             <button class="btn-gemini" onclick="generateFilmDescription('film-title-2', 'film-desc-2', this)">✨ Generate Description</button>
                         </div>
                     </div>
@@ -355,7 +404,7 @@
             
              <section id="about" class="container">
                 <div class="about-content">
-                    <div class="about-image"><img src="https://placehold.co/400x400/1f1f1f/E50914?text=Your+Photo" alt="Photo of Sudip"></div>
+                    <div class="about-image"><img src="https://i.postimg.cc/CKF23BX4/sudip-editz.jpg" alt="Photo of Sudip"></div>
                     <div class="about-text">
                         <h2>About Me</h2>
                         <p id="bio-p1">I am a passionate photographer and filmmaker with a love for telling stories through compelling images. Whether it's a dramatic landscape or an intimate portrait, I strive to find the cinematic quality in every moment.</p>
@@ -363,6 +412,20 @@
                         <div class="gemini-feature" style="margin-top: 2rem;">
                              <input type="text" id="bio-keywords" class="ai-input" placeholder="Enter keywords (e.g. passionate, cinematic, Kolkata)">
                              <button class="btn-gemini" id="generate-bio-btn">✨ Write My Bio with AI</button>
+                        </div>
+                        <div class="social-links">
+                            <h3>Follow Me</h3>
+                            <div class="social-icons">
+                                <a href="#" target="_blank">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.584-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.584.069-4.85c.149-3.225 1.664-4.771 4.919-4.919C8.416 2.175 8.796 2.163 12 2.163zm0 1.802C8.843 3.965 8.547 3.977 7.333 4.029c-2.459.112-3.647 1.309-3.759 3.759-.052 1.214-.063 1.51-.063 4.212s.011 2.998.063 4.212c.112 2.45 1.3 3.647 3.759 3.759 1.214.052 1.51.063 4.212.063s2.998-.011 4.212-.063c2.459-.112 3.647-1.309 3.759-3.759.052-1.214.063-1.51.063-4.212s-.011-2.998-.063-4.212c-.112-2.45-1.3-3.647-3.759-3.759-1.214-.052-1.51-.063-4.212-.063zM12 7.288c-2.61 0-4.712 2.102-4.712 4.712s2.102 4.712 4.712 4.712 4.712-2.102 4.712-4.712S14.61 7.288 12 7.288zm0 7.622c-1.603 0-2.91-1.307-2.91-2.91s1.307-2.91 2.91-2.91 2.91 1.307 2.91 2.91-1.307 2.91-2.91 2.91zm4.39-7.382c-.525 0-.95.425-.95.95s.425.95.95.95.95-.425.95-.95-.425-.95-.95-.95z"/></svg>
+                                </a>
+                                <a href="#" target="_blank">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                                </a>
+                                <a href="#" target="_blank">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M13.397 20.997v-8.196h2.765l.411-3.209h-3.176V7.548c0-.926.258-1.56 1.587-1.56h1.684V3.127A22.336 22.336 0 0 0 14.201 3c-2.444 0-4.122 1.492-4.122 4.231v2.355H7.332v3.209h2.753v8.196h3.312z"/></svg>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -394,10 +457,10 @@
             <div class="container">
                 <h2>Portraits Gallery</h2>
                 <div class="gallery-grid">
-                    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=600&h=900&auto=format&fit=crop" alt="Portrait 1"></div>
-                    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=600&h=900&auto=format&fit=crop" alt="Portrait 2"></div>
-                    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600&h=900&auto=format&fit=crop" alt="Portrait 3"></div>
-                    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=600&h=900&auto=format&fit=crop" alt="Portrait 4"></div>
+                    <div class="gallery-item"><img src="https://i.postimg.cc/Fscr4Vyv/DSC-1468.jpg" alt="Portrait 1"></div>
+                    <div class="gallery-item"><img src="https://i.postimg.cc/d1GZsYqg/DSC07309.jpg" alt="Portrait 2"></div>
+                    <div class="gallery-item"><img src="https://i.postimg.cc/PqYgXJ5M/IMG-20250320-162710-Copy.jpg" alt="Portrait 3"></div>
+                    <div class="gallery-item"><img src="https://i.postimg.cc/x8P8M8Bv/DSC07287-Copy.jpg" alt="Portrait 4"></div>
                 </div>
             </div>
         </div>
@@ -420,9 +483,10 @@
             <div class="container">
                 <h2>Shortfilms Gallery</h2>
                 <div class="shortfilms-grid">
-                    <div class="film-card"><div class="film-video"><iframe src="https://www.youtube.com/embed/ScfV1t9u_0s" allowfullscreen></iframe></div><div class="film-info"><h3>Chasing Light</h3></div></div>
-                    <div class="film-card"><div class="film-video"><iframe src="https://www.youtube.com/embed/hWz5T5-GZgQ" allowfullscreen></iframe></div><div class="film-info"><h3>Echoes in the Forest</h3></div></div>
-                    <div class="film-card"><div class="film-video"><iframe src="https://www.youtube.com/embed/gD-a_b1GNaA" allowfullscreen></iframe></div><div class="film-info"><h3>Neon Dreams</h3></div></div>
+                    <div class="film-card"><div class="film-video"><iframe src="https://www.youtube.com/embed/8bRtqUO9I5o" allowfullscreen></iframe></div><div class="film-info"><h3>My Short Film 1</h3></div></div>
+                    <div class="film-card"><div class="film-video"><iframe src="https://www.youtube.com/embed/p3mQIXbGHew" allowfullscreen></iframe></div><div class="film-info"><h3>My Short Film 2</h3></div></div>
+                    <div class="film-card"><div class="film-video"><iframe src="https://www.youtube.com/embed/cSeFMIuqktk" allowfullscreen></iframe></div><div class="film-info"><h3>My Short Film 3</h3></div></div>
+                    <div class="film-card"><div class="film-video"><iframe src="https://www.youtube.com/embed/ZpygXOWRLiw" allowfullscreen></iframe></div><div class="film-info"><h3>My Short Film 4</h3></div></div>
                 </div>
             </div>
         </div>
@@ -450,28 +514,23 @@
             const mainHeader = document.getElementById('mainHeader');
 
             function showPage(pageId, targetHref) {
-                // Show the correct page content div
-                pages.forEach(page => {
-                    page.classList.toggle('active', page.id === `page-${pageId}`);
-                });
-
-                // Update active link styling
-                document.querySelectorAll('.nav-action').forEach(link => {
-                    link.classList.remove('active-link');
-                });
-                document.querySelector(`.nav-links a[data-page='${pageId}']`).classList.add('active-link');
-
-
-                // Handle scrolling
-                if (targetHref && document.querySelector(targetHref)) {
-                    // Make sure the main page is visible before scrolling
-                    document.getElementById('page-home').classList.add('active');
-                    setTimeout(() => { 
-                        document.querySelector(targetHref).scrollIntoView({ behavior: 'smooth' });
-                    }, 50);
-                } else {
+                if (pageId.includes('gallery')) {
+                    document.getElementById('page-home').classList.remove('active');
+                    pages.forEach(p => p.classList.toggle('active', p.id === `page-${pageId}`));
                     window.scrollTo(0, 0);
+                } else {
+                    pages.forEach(p => p.classList.remove('active'));
+                    document.getElementById('page-home').classList.add('active');
+                    if (targetHref && document.querySelector(targetHref)) {
+                       setTimeout(() => { 
+                           document.querySelector(targetHref).scrollIntoView({ behavior: 'smooth' });
+                       }, 50);
+                    }
                 }
+
+                document.querySelectorAll('.nav-links a').forEach(link => link.classList.remove('active-link'));
+                const activeLink = document.querySelector(`.nav-links a[data-page='${pageId}']`) || document.querySelector(`.nav-links a[href='${targetHref}']`);
+                if (activeLink) activeLink.classList.add('active-link');
                 
                 if (mobileMenu.classList.contains('active')) {
                    mobileMenu.classList.remove('active');
@@ -483,21 +542,7 @@
                     e.preventDefault();
                     const pageId = e.currentTarget.dataset.page;
                     const href = e.currentTarget.getAttribute('href');
-                    
-                    if (pageId.includes('gallery')) {
-                         showPage(pageId, null);
-                    } else {
-                        // This is for home, about, services, contact
-                        // Ensure the main page is active
-                        pages.forEach(p => p.classList.toggle('active', p.id === 'page-home'));
-                        // And then scroll
-                         if (href) {
-                            document.querySelector(href).scrollIntoView({ behavior: 'smooth' });
-                         }
-                    }
-                    if(mobileMenu.classList.contains('active')) {
-                       mobileMenu.classList.remove('active');
-                   }
+                    showPage(pageId, href);
                 });
             });
 
@@ -511,7 +556,7 @@
                 else mainHeader.classList.remove('scrolled');
             });
 
-            // Your Gemini functions should be placed here
+            // Your Gemini functions can be re-added here if needed.
         });
     </script>
 </body>
